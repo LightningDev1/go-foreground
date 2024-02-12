@@ -16,23 +16,21 @@ func getActiveWindowID() (xproto.Window, error) {
 	defer conn.Close()
 
 	setup := xproto.Setup(conn)
-	screen := setup.DefaultScreen(conn)
-	root := screen.Root
+	root := setup.DefaultScreen(conn).Root
 
-	activeWindow, err := xproto.GetProperty(
-		conn,
-		false,
-		root,
-		xproto.Atom("_NET_ACTIVE_WINDOW"),
-		xproto.Atom("WINDOW"),
-		0,
-		(1<<32)-1,
-	).Reply()
+	aname := "_NET_ACTIVE_WINDOW"
+	activeAtom, err := xproto.InternAtom(conn, true, uint16(len(aname)), aname).Reply()
 	if err != nil {
 		return 0, err
 	}
 
-	return xproto.Window(activeWindow.Value[0]), nil
+	reply, err := xproto.GetProperty(conn, false, root, activeAtom.Atom,
+		xproto.GetPropertyTypeAny, 0, (1<<32)-1).Reply()
+	if err != nil {
+		return 0, err
+	}
+
+	return xproto.Window(xgb.Get32(reply.Value)), nil
 }
 
 // GetForegroundPID returns the PID of the foreground window.
@@ -48,20 +46,19 @@ func GetForegroundPID() (uint32, error) {
 	}
 	defer conn.Close()
 
-	propReply, err := xproto.GetProperty(
-		conn,
-		false,
-		windowID,
-		xproto.Atom("_NET_WM_PID"),
-		xproto.Atom("CARDINAL"),
-		0,
-		(1<<32)-1,
-	).Reply()
+	aname := "_NET_WM_PID"
+	pidAtom, err := xproto.InternAtom(conn, true, uint16(len(aname)), aname).Reply()
 	if err != nil {
 		return 0, err
 	}
 
-	return propReply.Value32(), nil
+	reply, err := xproto.GetProperty(conn, false, windowID, pidAtom.Atom,
+		xproto.GetPropertyTypeAny, 0, (1<<32)-1).Reply()
+	if err != nil {
+		return 0, err
+	}
+
+	return xgb.Get32(reply.Value), nil
 }
 
 // GetForegroundTitle returns the title of the foreground window.
@@ -77,18 +74,17 @@ func GetForegroundTitle() (string, error) {
 	}
 	defer conn.Close()
 
-	propReply, err := xproto.GetProperty(
-		conn,
-		false,
-		windowID,
-		xproto.Atom("_NET_WM_NAME"),
-		xproto.Atom("UTF8_STRING"),
-		0,
-		(1<<32)-1,
-	).Reply()
+	aname := "_NET_WM_NAME"
+	nameAtom, err := xproto.InternAtom(conn, true, uint16(len(aname)), aname).Reply()
 	if err != nil {
 		return "", err
 	}
 
-	return string(propReply.Value), nil
+	reply, err := xproto.GetProperty(conn, false, windowID, nameAtom.Atom,
+		xproto.GetPropertyTypeAny, 0, (1<<32)-1).Reply()
+	if err != nil {
+		return "", err
+	}
+
+	return string(reply.Value), nil
 }
