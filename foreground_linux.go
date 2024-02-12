@@ -4,7 +4,7 @@ package foreground
 
 import (
 	"github.com/BurntSushi/xgb"
-	"github.com/robotn/xgb/xproto"
+	"github.com/BurntSushi/xgb/xproto"
 )
 
 // getActiveWindowID returns the X11 window ID of the active window.
