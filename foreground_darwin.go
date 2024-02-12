@@ -11,7 +11,6 @@ import (
 // GetForegroundPID returns the PID of the foreground window.
 func GetForegroundPID() (uint32, error) {
 	return 0, errors.New("GetForegroundPID() not implemented on darwin")
-
 }
 
 // GetForegroundTitle returns the title of the foreground window.
