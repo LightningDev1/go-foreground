@@ -5,7 +5,7 @@ package foreground
 import (
 	"errors"
 
-	"github.com/progrium/macdriver/macos/appkit"
+	"github.com/progrium/darwinkit/macos/appkit"
 )
 
 // GetForegroundPID returns the PID of the foreground window.

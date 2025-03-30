@@ -2,5 +2,5 @@ github.com/BurntSushi/xgb v0.0.0-20210121224620-deaf085860bc h1:7D+Bh06CRPCJO3gr
 github.com/BurntSushi/xgb v0.0.0-20210121224620-deaf085860bc/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/go-test/deep v1.1.0 h1:WOcxcdHcvdgThNXjw0t76K42FXTU7HpNQWHpA2HHNlg=
 github.com/go-test/deep v1.1.0/go.mod h1:5C2ZWiW0ErCdrYzpqxLbTX7MG14M9iiw8DgHncVwcsE=
-github.com/progrium/macdriver v0.5.0-preview.0.20240129182626-6a98f82290e5 h1:iqbseDydKyMyPcm6aKIjGFybLEKnqidR+mTdg/8/Drk=
-github.com/progrium/macdriver v0.5.0-preview.0.20240129182626-6a98f82290e5/go.mod h1:XHKjq4T5vdG2whD9bROezkhQfTclsD0PvOE4sLVW410=
+github.com/progrium/darwinkit v0.5.0 h1:SwchcMbTOG1py3CQsINmGlsRmYKdlFrbnv3dE4aXA0s=
+github.com/progrium/darwinkit v0.5.0/go.mod h1:PxQhZuftnALLkCVaR8LaHtUOfoo4pm8qUDG+3C/sXNs=
