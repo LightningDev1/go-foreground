@@ -4,8 +4,8 @@ package foreground
 
 import (
 	"errors"
-
-	"github.com/progrium/darwinkit/macos/appkit"
+	"os/exec"
+	"strings"
 )
 
 // GetForegroundPID returns the PID of the foreground window.
@@ -15,8 +15,12 @@ func GetForegroundPID() (uint32, error) {
 
 // GetForegroundTitle returns the title of the foreground window.
 func GetForegroundTitle() (string, error) {
-	workspace := appkit.Workspace_SharedWorkspace()
-	frontApp := workspace.FrontmostApplication()
+	cmd := exec.Command("osascript", "-e",
+		`tell application "System Events" to tell (first process whose frontmost is true) to return name of window 1`)
+	output, err := cmd.Output()
+	if err != nil {
+		return "", err
+	}
 
-	return frontApp.LocalizedName(), nil
+	return strings.TrimSpace(string(output)), nil
 }
